@@ -90,6 +90,7 @@ const menuOpen = ref(false)
       inset: 0 0 0 auto;
       width: 240px;
       height: 100vh;
+      box-sizing: border-box;
       flex-direction: column;
       padding: 4rem 1.25rem 1.5rem;
       background: rgba(255, 255, 255, 0.98);
