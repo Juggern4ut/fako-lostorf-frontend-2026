@@ -44,12 +44,13 @@ const heroBackgroundStyle = computed(() => {
 
 <style scoped lang="scss">
 .home {
-  min-height: 100vh;
+  min-height: calc(100vh - var(--header-height, 0px));
 }
 
 .home__hero {
   position: relative;
-  min-height: 100vh;
+  box-sizing: border-box;
+  min-height: calc(100vh - var(--header-height, 0px));
   display: flex;
   align-items: center;
   justify-content: center;

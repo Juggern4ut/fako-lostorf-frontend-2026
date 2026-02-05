@@ -53,6 +53,7 @@ const menuOpen = ref(false)
 }
 
 .app {
+  --header-height: 56px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
