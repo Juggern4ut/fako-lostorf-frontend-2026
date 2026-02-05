@@ -111,6 +111,11 @@ const formatDate = (value?: string) => {
 
   &__body {
     line-height: 1.7;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
   }
 }
 </style>
