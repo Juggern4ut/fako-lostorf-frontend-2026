@@ -1,11 +1,15 @@
 <template>
   <section class="home">
-    <div class="home__inner">
-      <div class="home__text-block">
+    <div
+      class="home__hero"
+      :style="heroBackgroundStyle"
+    >
+      <div class="home__overlay" />
+
+      <div class="home__content">
         <h1 class="home__title">{{ settings?.homeTitle ?? fallbackTitle }}</h1>
         <p v-if="introHtml" class="home__intro" v-html="introHtml" />
       </div>
-      <div v-if="heroImageUrl" class="home__image" :style="{ backgroundImage: `url(${heroImageUrl})` }" />
     </div>
   </section>
 </template>
@@ -19,44 +23,89 @@ const fallbackTitle = 'Willkommen beim Fasnachtsverein Lostorf'
 
 const introHtml = computed(() => {
   if (!settings.value?.homeIntro) return null
-  // PB editor liefert HTML; falls es Plaintext wäre, könnte man hier noch ersetzen
+  // PB editor liefert HTML
   return settings.value.homeIntro
+})
+
+const heroBackgroundStyle = computed(() => {
+  if (heroImageUrl.value) {
+    return {
+      backgroundImage: `url(${heroImageUrl.value})`,
+    }
+  }
+
+  // Fallback, falls noch kein Bild hinterlegt ist
+  return {
+    backgroundImage:
+      'radial-gradient(circle at top, #2a2b4a, #090b12 60%)',
+  }
 })
 </script>
 
 <style scoped lang="scss">
 .home {
-  padding: 2.5rem 1.25rem;
+  min-height: 100vh;
+}
 
-  &__inner {
-    max-width: 980px;
-    margin: 0 auto;
-    display: grid;
-    gap: 2rem;
-    align-items: center;
+.home__hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background-size: cover;
+  background-position: center;
+}
 
-    @media (min-width: 800px) {
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    }
+.home__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(3, 7, 18, 0.9), rgba(3, 7, 18, 0.6)),
+    radial-gradient(circle at top, rgba(0, 0, 0, 0.2), transparent 60%);
+}
+
+.home__content {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 1;
+}
+
+.home__title {
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  opacity: 0;
+  transform: translateY(16px);
+  animation: home-fade-in 900ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+  animation-delay: 0.15s;
+}
+
+.home__intro {
+  line-height: 1.7;
+  max-width: 46rem;
+  margin: 0 auto;
+  color: rgba(249, 250, 251, 0.9);
+
+  opacity: 0;
+  transform: translateY(18px);
+  animation: home-fade-in 900ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+  animation-delay: 0.55s;
+}
+
+@keyframes home-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
   }
-
-  &__title {
-    font-size: 2.1rem;
-    margin-bottom: 1rem;
-  }
-
-  &__intro {
-    line-height: 1.7;
-    max-width: 40rem;
-  }
-
-  &__image {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    border-radius: 16px;
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.45);
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>
