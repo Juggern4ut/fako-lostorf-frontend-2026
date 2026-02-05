@@ -3,28 +3,50 @@
     <header class="app__header">
       <div class="app__brand">Fasnachtsverein Lostorf</div>
       <nav class="app__nav">
-        <button class="app__nav-link">Home</button>
-        <button class="app__nav-link">News</button>
-        <button class="app__nav-link">Anlässe</button>
-        <button class="app__nav-link">Galerie</button>
-        <button class="app__nav-link">Kontakt</button>
+        <button class="app__nav-link" @click="scrollTo('home')">Home</button>
+        <button class="app__nav-link" @click="scrollTo('news')">News</button>
+        <button class="app__nav-link" @click="scrollTo('events')">Anlässe</button>
+        <button class="app__nav-link" @click="scrollTo('gallery')">Galerie</button>
+        <button class="app__nav-link" @click="scrollTo('contact')">Kontakt</button>
       </nav>
     </header>
 
     <main class="app__main">
-      <section class="home">
-        <h1 class="home__title">Willkommen beim Fasnachtsverein Lostorf</h1>
-        <p class="home__text">
-          Die Fasnacht ist aus dem kulturellen Leben unserer Gemeinde nicht mehr wegzudenken. Gemeinsam wollen wir
-          unvergessliche Momente schaffen und uns auf die schönste Zeit im Jahr freuen.
-        </p>
+      <section id="home" class="app__section app__section--primary">
+        <HomeSection />
+      </section>
+
+      <section id="news" class="app__section">
+        <NewsSection />
+      </section>
+
+      <section id="events" class="app__section">
+        <EventsSection />
+      </section>
+
+      <section id="gallery" class="app__section">
+        <GallerySection />
+      </section>
+
+      <section id="contact" class="app__section">
+        <ContactSection />
       </section>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-// Routing & dynamische Inhalte folgen später; aktuell nur statischer Rahmen.
+import HomeSection from '~/components/sections/HomeSection.vue'
+import NewsSection from '~/components/sections/NewsSection.vue'
+import EventsSection from '~/components/sections/EventsSection.vue'
+import GallerySection from '~/components/sections/GallerySection.vue'
+import ContactSection from '~/components/sections/ContactSection.vue'
+
+const scrollTo = (id: string) => {
+  const el = document.getElementById(id)
+  if (!el) return
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
 </script>
 
 <style scoped lang="scss">
@@ -37,12 +59,15 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
 
   &__header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.25rem;
+    padding: 0.8rem 1.25rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(3, 7, 18, 0.8);
+    background: rgba(3, 7, 18, 0.85);
     backdrop-filter: blur(18px);
   }
 
@@ -76,20 +101,12 @@
 
   &__main {
     flex: 1;
-    padding: 2rem 1.25rem 3rem;
-  }
-}
-
-.home {
-  &__title {
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
   }
 
-  &__text {
-    max-width: 38rem;
-    line-height: 1.6;
-    color: rgba(249, 250, 251, 0.86);
+  &__section {
+    &--primary {
+      padding-top: 2rem;
+    }
   }
 }
 </style>

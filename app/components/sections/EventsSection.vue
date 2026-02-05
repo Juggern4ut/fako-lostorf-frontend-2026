@@ -1,0 +1,107 @@
+<template>
+  <section class="events">
+    <div class="events__inner">
+      <h2 class="events__title">Anlässe</h2>
+      <div v-if="pending" class="events__state">Lade Anlässe…</div>
+      <div v-else-if="error" class="events__state events__state--error">Anlässe konnten nicht geladen werden.</div>
+      <div v-else-if="items.length === 0" class="events__state">Aktuell sind keine Anlässe erfasst.</div>
+
+      <div v-else class="events__list">
+        <article v-for="ev in items" :key="ev.id" class="events__item">
+          <div class="events__date-block">
+            <span class="events__date">{{ formatDate(ev.startDate) }}</span>
+            <span v-if="ev.location" class="events__location">{{ ev.location }}</span>
+          </div>
+          <div class="events__content">
+            <h3 class="events__item-title">{{ ev.title }}</h3>
+            <div v-if="ev.description" class="events__desc" v-html="ev.description" />
+            <div v-if="ev.category" class="events__category">{{ ev.category }}</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup lang="ts">
+import { useEvents } from '~/composables/useEvents'
+
+const { items, pending, error } = useEvents()
+
+const formatDate = (value?: string) => {
+  if (!value) return ''
+  const d = new Date(value)
+  return d.toLocaleDateString('de-CH', { day: '2-digit', month: '2-digit', year: 'numeric' })
+}
+</script>
+
+<style scoped lang="scss">
+.events {
+  padding: 2.5rem 1.25rem;
+
+  &__inner {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    font-size: 1.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  &__state {
+    padding: 0.75rem 0;
+    color: rgba(249, 250, 251, 0.8);
+
+    &--error {
+      color: #ffb4b4;
+    }
+  }
+
+  &__list {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  &__item {
+    padding: 1.1rem 1.25rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: grid;
+    gap: 0.5rem;
+
+    @media (min-width: 720px) {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 3fr);
+      align-items: flex-start;
+    }
+  }
+
+  &__date-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.9rem;
+    color: rgba(249, 250, 251, 0.8);
+  }
+
+  &__location {
+    font-size: 0.85rem;
+  }
+
+  &__item-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__desc {
+    line-height: 1.7;
+  }
+
+  &__category {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+}
+</style>
