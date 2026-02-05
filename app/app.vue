@@ -3,50 +3,31 @@
     <header class="app__header">
       <div class="app__brand">Fasnachtsverein Lostorf</div>
       <nav class="app__nav">
-        <button class="app__nav-link" @click="scrollTo('home')">Home</button>
-        <button class="app__nav-link" @click="scrollTo('news')">News</button>
-        <button class="app__nav-link" @click="scrollTo('events')">Anlässe</button>
-        <button class="app__nav-link" @click="scrollTo('gallery')">Galerie</button>
-        <button class="app__nav-link" @click="scrollTo('contact')">Kontakt</button>
+        <NuxtLink
+          v-for="link in links"
+          :key="link.to"
+          :to="link.to"
+          class="app__nav-link"
+        >
+          {{ link.label }}
+        </NuxtLink>
       </nav>
     </header>
 
     <main class="app__main">
-      <section id="home" class="app__section app__section--primary">
-        <HomeSection />
-      </section>
-
-      <section id="news" class="app__section">
-        <NewsSection />
-      </section>
-
-      <section id="events" class="app__section">
-        <EventsSection />
-      </section>
-
-      <section id="gallery" class="app__section">
-        <GallerySection />
-      </section>
-
-      <section id="contact" class="app__section">
-        <ContactSection />
-      </section>
+      <NuxtPage />
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import HomeSection from '~/components/sections/HomeSection.vue'
-import NewsSection from '~/components/sections/NewsSection.vue'
-import EventsSection from '~/components/sections/EventsSection.vue'
-import GallerySection from '~/components/sections/GallerySection.vue'
-import ContactSection from '~/components/sections/ContactSection.vue'
-
-const scrollTo = (id: string) => {
-  const el = document.getElementById(id)
-  if (!el) return
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
+const links = [
+  { to: '/', label: 'Home' },
+  { to: '/news', label: 'News' },
+  { to: '/events', label: 'Anlässe' },
+  { to: '/gallery', label: 'Galerie' },
+  { to: '/contact', label: 'Kontakt' },
+]
 </script>
 
 <style scoped lang="scss">
