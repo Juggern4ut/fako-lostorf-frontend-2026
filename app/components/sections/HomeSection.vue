@@ -10,9 +10,9 @@
         <h1 class="home__title">{{ settings?.homeTitle ?? fallbackTitle }}</h1>
         <p v-if="introHtml" class="home__intro" v-html="introHtml" />
 
-        <div v-if="countdown" class="home__countdown">
-          <div class="home__countdown-label">{{ countdown.label }}</div>
-          <div class="home__countdown-grid" v-if="!countdown.finished">
+        <div class="home__countdown" :class="{ 'home__countdown--ready': countdown }">
+          <div v-if="countdown" class="home__countdown-label">{{ countdown.label }}</div>
+          <div v-if="countdown && !countdown.finished" class="home__countdown-grid">
             <div class="home__countdown-part home__countdown-part--days">
               <div class="home__countdown-value">{{ countdown.days }}</div>
               <div class="home__countdown-unit">Tage</div>
@@ -125,8 +125,12 @@ const heroBackgroundStyle = computed(() => {
 
 .home__countdown {
   margin-top: 0.4rem;
+  min-height: 4.6rem;
   opacity: 0;
   transform: translateY(20px);
+}
+
+.home__countdown--ready {
   animation: home-fade-in 900ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
   animation-delay: 0.95s;
 }
