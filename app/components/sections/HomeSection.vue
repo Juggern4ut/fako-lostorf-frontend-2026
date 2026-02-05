@@ -122,7 +122,7 @@ const heroBackgroundStyle = computed(() => {
   animation: home-fade-in 900ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
   animation-delay: 0.55s;
 
-  img {
+  :deep(img) {
     max-width: 100%;
     height: auto;
   }
