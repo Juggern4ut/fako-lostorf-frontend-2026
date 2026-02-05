@@ -10,6 +10,6 @@ import HomeSection from '~/components/sections/HomeSection.vue'
 
 <style scoped lang="scss">
 .page--home {
-  padding-top: 2rem;
+  padding-top: 0;
 }
 </style>
