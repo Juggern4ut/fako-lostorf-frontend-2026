@@ -87,8 +87,8 @@ const heroBackgroundStyle = computed(() => {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(3, 7, 18, 0.9), rgba(3, 7, 18, 0.6)),
-    radial-gradient(circle at top, rgba(0, 0, 0, 0.2), transparent 60%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.7)),
+    radial-gradient(circle at top, rgba(254, 249, 195, 0.35), transparent 60%);
 }
 
 .home__content {
@@ -115,7 +115,7 @@ const heroBackgroundStyle = computed(() => {
   line-height: 1.7;
   max-width: 46rem;
   margin: 0 auto 1.8rem;
-  color: rgba(249, 250, 251, 0.9);
+  color: #4b5563;
 
   opacity: 0;
   transform: translateY(18px);

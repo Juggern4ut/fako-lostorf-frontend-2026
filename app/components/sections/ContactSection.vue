@@ -40,6 +40,7 @@ const addressLines = computed(() => {
 <style scoped lang="scss">
 .contact {
   padding: 2.5rem 1.25rem 3rem;
+  background: rgba(255, 255, 255, 0.65);
 
   &__inner {
     max-width: 980px;
@@ -64,8 +65,8 @@ const addressLines = computed(() => {
   &__block {
     padding: 1.1rem 1.25rem;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.25);
 
     &--links {
       display: grid;

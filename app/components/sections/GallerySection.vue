@@ -49,7 +49,7 @@ const open = (url: string) => {
 <style scoped lang="scss">
 .gallery {
   padding: 2.5rem 1.25rem 3.5rem;
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.65);
 
   &__inner {
     max-width: 980px;
@@ -81,8 +81,8 @@ const open = (url: string) => {
     gap: 1.1rem;
     padding: 1.1rem 1.25rem;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.25);
     cursor: pointer;
 
     @media (max-width: 720px) {

@@ -57,8 +57,8 @@ const menuOpen = ref(false)
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(circle at top, #2a2b4a, #090b12 55%);
-  color: #fdfdfd;
+  background: radial-gradient(circle at top, #fff7ed, #ffedd5 55%);
+  color: #334155;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
 
   &__header {
@@ -69,8 +69,8 @@ const menuOpen = ref(false)
     justify-content: space-between;
     align-items: center;
     padding: 0.8rem 1.25rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(3, 7, 18, 0.85);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(18px);
   }
 
@@ -92,8 +92,8 @@ const menuOpen = ref(false)
       height: 100vh;
       flex-direction: column;
       padding: 4rem 1.25rem 1.5rem;
-      background: rgba(3, 7, 18, 0.98);
-      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.98);
+      border-left: 1px solid rgba(148, 163, 184, 0.25);
       transform: translateX(100%);
       transition: transform 220ms ease-out;
       z-index: 20;
@@ -104,7 +104,7 @@ const menuOpen = ref(false)
     border-radius: 999px;
     padding: 0.35rem 0.8rem;
     border: 1px solid transparent;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(251, 146, 60, 0.06);
     color: inherit;
     font-size: 0.85rem;
     font-weight: 500;
@@ -112,13 +112,13 @@ const menuOpen = ref(false)
     text-decoration: none;
 
     &:hover {
-      border-color: rgba(255, 255, 255, 0.25);
-      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(251, 146, 60, 0.8);
+      background: rgba(251, 146, 60, 0.16);
     }
 
     &--active {
-      border-color: rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(251, 146, 60, 1);
+      background: rgba(251, 146, 60, 0.24);
     }
 
     @media (max-width: 720px) {
@@ -141,7 +141,7 @@ const menuOpen = ref(false)
       margin-left: 0.8rem;
       border-radius: 999px;
       border: none;
-      background: rgba(3, 7, 18, 0.9);
+      background: rgba(255, 255, 255, 0.9);
       cursor: pointer;
       position: relative;
       z-index: 30;
@@ -152,7 +152,7 @@ const menuOpen = ref(false)
     width: 1.4rem;
     height: 2.5px;
     border-radius: 999px;
-    background: #fdfdfd;
+    background: #fb923c;
   }
 
   &__main {
