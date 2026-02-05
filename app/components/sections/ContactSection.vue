@@ -42,6 +42,10 @@ const addressLines = computed(() => {
   padding: 2.5rem 1.25rem 3rem;
   background: rgba(255, 255, 255, 0.65);
 
+  @media (max-width: 640px) {
+    padding-bottom: 2.25rem;
+  }
+
   &__inner {
     max-width: 980px;
     margin: 0 auto;
@@ -102,7 +106,7 @@ const addressLines = computed(() => {
   &__value {
     font-size: 1rem;
     font-weight: 600;
-    color: #fefefe;
+    color: #1f2937;
     text-decoration: none;
 
     &:hover {

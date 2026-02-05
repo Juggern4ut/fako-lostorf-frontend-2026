@@ -45,6 +45,10 @@ const formatDate = (value?: string) => {
   padding: 2.5rem 1.25rem;
   background: rgba(255, 255, 255, 0.65);
 
+  @media (max-width: 640px) {
+    padding-bottom: 2rem;
+  }
+
   &__inner {
     max-width: 980px;
     margin: 0 auto;

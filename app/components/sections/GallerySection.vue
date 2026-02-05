@@ -51,6 +51,10 @@ const open = (url: string) => {
   padding: 2.5rem 1.25rem 3.5rem;
   background: rgba(255, 255, 255, 0.65);
 
+  @media (max-width: 640px) {
+    padding-bottom: 2.25rem;
+  }
+
   &__inner {
     max-width: 980px;
     margin: 0 auto;
