@@ -87,13 +87,15 @@ const menuOpen = ref(false)
     @media (max-width: 720px) {
       position: fixed;
       inset: 0 0 0 auto;
-      width: 220px;
+      width: 240px;
+      height: 100vh;
       flex-direction: column;
       padding: 4rem 1.25rem 1.5rem;
       background: rgba(3, 7, 18, 0.98);
       border-left: 1px solid rgba(255, 255, 255, 0.08);
       transform: translateX(100%);
       transition: transform 220ms ease-out;
+      z-index: 20;
     }
   }
 
@@ -132,20 +134,22 @@ const menuOpen = ref(false)
       display: inline-flex;
       flex-direction: column;
       justify-content: center;
-      gap: 0.22rem;
-      width: 2.1rem;
-      height: 2.1rem;
+      gap: 0.26rem;
+      width: 2.6rem;
+      height: 2.6rem;
       margin-left: 0.8rem;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      border: none;
       background: rgba(3, 7, 18, 0.9);
       cursor: pointer;
+      position: relative;
+      z-index: 30;
     }
   }
 
   &__burger-line {
-    width: 1.1rem;
-    height: 2px;
+    width: 1.4rem;
+    height: 2.5px;
     border-radius: 999px;
     background: #fdfdfd;
   }
