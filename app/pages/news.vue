@@ -10,6 +10,6 @@ import NewsSection from '~/components/sections/NewsSection.vue'
 
 <style scoped lang="scss">
 .page--news {
-  padding-top: 2rem;
+  padding-top: 0;
 }
 </style>

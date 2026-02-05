@@ -10,6 +10,6 @@ import GallerySection from '~/components/sections/GallerySection.vue'
 
 <style scoped lang="scss">
 .page--gallery {
-  padding-top: 2rem;
+  padding-top: 0;
 }
 </style>
