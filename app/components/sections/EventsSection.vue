@@ -8,6 +8,7 @@
 
       <div v-else class="events__list">
         <article v-for="ev in items" :key="ev.id" class="events__item">
+          <div v-if="ev.image" class="events__image" :style="{ backgroundImage: `url(${imageUrl(ev)})` }" />
           <div class="events__date-block">
             <span class="events__date">{{ formatDate(ev.startDate) }}</span>
             <span v-if="ev.location" class="events__location">{{ ev.location }}</span>
@@ -25,8 +26,15 @@
 
 <script setup lang="ts">
 import { useEvents } from '~/composables/useEvents'
+import { usePocketBase } from '~/composables/usePocketBase'
 
+const pb = usePocketBase()
 const { items, pending, error } = useEvents()
+
+const imageUrl = (ev: any) => {
+  if (!ev.image) return null
+  return pb.fileUrl(ev, ev.image)
+}
 
 const formatDate = (value?: string) => {
   if (!value) return ''
@@ -64,17 +72,25 @@ const formatDate = (value?: string) => {
   }
 
   &__item {
-    padding: 1.1rem 1.25rem;
+    padding: 1.1rem 1.25rem 1.25rem;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.08);
     display: grid;
-    gap: 0.5rem;
+    gap: 0.6rem;
 
     @media (min-width: 720px) {
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 3fr);
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr) minmax(0, 3fr);
       align-items: flex-start;
     }
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
   }
 
   &__date-block {

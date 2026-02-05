@@ -8,6 +8,7 @@
 
       <div v-else class="news__list">
         <article v-for="item in items" :key="item.id" class="news__item">
+          <div v-if="item.heroImage" class="news__image" :style="{ backgroundImage: `url(${heroUrl(item)})` }" />
           <div class="news__meta">
             <span v-if="item.publishedAt" class="news__date">{{ formatDate(item.publishedAt) }}</span>
             <span v-if="item.isPinned" class="news__badge">Highlight</span>
@@ -22,8 +23,15 @@
 
 <script setup lang="ts">
 import { useNews } from '~/composables/useNews'
+import { usePocketBase } from '~/composables/usePocketBase'
 
+const pb = usePocketBase()
 const { items, pending, error } = useNews()
+
+const heroUrl = (item: any) => {
+  if (!item.heroImage) return null
+  return pb.fileUrl(item, item.heroImage)
+}
 
 const formatDate = (value?: string) => {
   if (!value) return ''
@@ -62,10 +70,20 @@ const formatDate = (value?: string) => {
   }
 
   &__item {
-    padding: 1.1rem 1.25rem;
+    padding: 1.1rem 1.25rem 1.25rem;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 3 / 1;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
   }
 
   &__meta {
