@@ -1,13 +1,27 @@
 <template>
-  <div class="app">
+  <div class="app" :class="{ 'app--menu-open': menuOpen }">
     <header class="app__header">
       <div class="app__brand">Fasnachtsverein Lostorf</div>
+
+      <button
+        class="app__burger"
+        type="button"
+        aria-label="Navigation öffnen"
+        @click="menuOpen = !menuOpen"
+      >
+        <span class="app__burger-line" />
+        <span class="app__burger-line" />
+        <span class="app__burger-line" />
+      </button>
+
       <nav class="app__nav">
         <NuxtLink
           v-for="link in links"
           :key="link.to"
           :to="link.to"
           class="app__nav-link"
+          :class="{ 'app__nav-link--active': route.path === link.to }"
+          @click="menuOpen = false"
         >
           {{ link.label }}
         </NuxtLink>
@@ -28,9 +42,16 @@ const links = [
   { to: '/gallery', label: 'Galerie' },
   { to: '/contact', label: 'Kontakt' },
 ]
+
+const route = useRoute()
+const menuOpen = ref(false)
 </script>
 
 <style scoped lang="scss">
+:global(body) {
+  margin: 0;
+}
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -62,6 +83,18 @@ const links = [
   &__nav {
     display: flex;
     gap: 0.4rem;
+
+    @media (max-width: 720px) {
+      position: fixed;
+      inset: 0 0 0 auto;
+      width: 220px;
+      flex-direction: column;
+      padding: 4rem 1.25rem 1.5rem;
+      background: rgba(3, 7, 18, 0.98);
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      transform: translateX(100%);
+      transition: transform 220ms ease-out;
+    }
   }
 
   &__nav-link {
@@ -73,11 +106,48 @@ const links = [
     font-size: 0.85rem;
     font-weight: 500;
     cursor: pointer;
+    text-decoration: none;
 
     &:hover {
       border-color: rgba(255, 255, 255, 0.25);
       background: rgba(255, 255, 255, 0.06);
     }
+
+    &--active {
+      border-color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    @media (max-width: 720px) {
+      display: block;
+      text-align: right;
+      padding-inline: 0.9rem;
+    }
+  }
+
+  &__burger {
+    display: none;
+
+    @media (max-width: 720px) {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.22rem;
+      width: 2.1rem;
+      height: 2.1rem;
+      margin-left: 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(3, 7, 18, 0.9);
+      cursor: pointer;
+    }
+  }
+
+  &__burger-line {
+    width: 1.1rem;
+    height: 2px;
+    border-radius: 999px;
+    background: #fdfdfd;
   }
 
   &__main {
@@ -87,6 +157,14 @@ const links = [
   &__section {
     &--primary {
       padding-top: 2rem;
+    }
+  }
+}
+
+.app--menu-open {
+  .app__nav {
+    @media (max-width: 720px) {
+      transform: translateX(0);
     }
   }
 }
