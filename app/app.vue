@@ -50,6 +50,7 @@ const menuOpen = ref(false)
 <style scoped lang="scss">
 :global(body) {
   margin: 0;
+  overflow-x: hidden;
 }
 
 .app {
