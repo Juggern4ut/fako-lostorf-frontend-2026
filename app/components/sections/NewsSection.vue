@@ -16,6 +16,16 @@
           <h3 class="news__item-title">{{ item.title }}</h3>
           <div v-if="item.body" class="news__body" v-html="item.body" />
         </article>
+
+        <div v-if="totalPages > 1" class="news__pagination">
+          <button class="news__page-btn" type="button" :disabled="page <= 1" @click="prev">
+            Zurück
+          </button>
+          <span class="news__page-info">Seite {{ page }} / {{ totalPages }}</span>
+          <button class="news__page-btn" type="button" :disabled="page >= totalPages" @click="next">
+            Weiter
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -26,7 +36,7 @@ import { useNews } from '~/composables/useNews'
 import { usePocketBase } from '~/composables/usePocketBase'
 
 const pb = usePocketBase()
-const { items, pending, error } = useNews()
+const { items, pending, error, page, totalPages, next, prev } = useNews()
 
 const heroUrl = (item: any) => {
   if (!item.heroImage) return null
@@ -71,15 +81,20 @@ const formatDate = (value?: string) => {
   &__list {
     display: grid;
     gap: 1.25rem;
+
+    @media (min-width: 900px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   &__item {
-    padding: 1.1rem 1.25rem 1.25rem;
+    padding: 0.9rem 1rem 1.05rem;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(148, 163, 184, 0.25);
     display: grid;
-    gap: 0.7rem;
+    gap: 0.6rem;
+    font-size: 0.95rem;
   }
 
   &__image {
@@ -109,17 +124,44 @@ const formatDate = (value?: string) => {
   }
 
   &__item-title {
-    font-size: 1.2rem;
-    margin: 0.2rem 0 0.6rem;
+    font-size: 1.05rem;
+    margin: 0.15rem 0 0.45rem;
   }
 
   &__body {
-    line-height: 1.7;
+    line-height: 1.6;
 
     :deep(img) {
       max-width: 100%;
       height: auto;
     }
+  }
+
+  &__pagination {
+    margin-top: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  &__page-btn {
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  &__page-info {
+    font-size: 0.85rem;
+    color: rgba(55, 65, 81, 0.9);
   }
 }
 </style>
