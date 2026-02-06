@@ -1,6 +1,6 @@
 <template>
   <section class="contact">
-    <div v-if="heroImageUrl" class="contact__hero" :style="{ backgroundImage: `url(${heroImageUrl})` }" />
+    <HeroImage :image-url="contactHeroImageUrl" />
     <div class="contact__inner">
       <h2 class="contact__title">Kontakt</h2>
       <div class="contact__grid">
@@ -29,8 +29,9 @@
 
 <script setup lang="ts">
 import { useSiteSettings } from '~/composables/useSiteSettings'
+import HeroImage from '~/components/HeroImage.vue'
 
-const { settings, heroImageUrl } = useSiteSettings()
+const { settings, contactHeroImageUrl } = useSiteSettings()
 
 const addressLines = computed(() => {
   if (!settings.value?.contactAddress) return []
@@ -45,14 +46,6 @@ const addressLines = computed(() => {
 
   @media (max-width: 640px) {
     padding-bottom: 2.25rem;
-  }
-
-  &__hero {
-    width: calc(100% + 2.5rem);
-    margin: 0 -1.25rem 1.75rem;
-    aspect-ratio: 16 / 5;
-    background-size: cover;
-    background-position: center;
   }
 
   &__inner {

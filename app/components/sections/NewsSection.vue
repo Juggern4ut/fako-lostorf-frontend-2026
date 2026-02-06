@@ -1,7 +1,7 @@
 <template>
   <section class="news">
+    <HeroImage :image-url="newsHeroImageUrl" compact />
     <div class="news__inner">
-      <div v-if="heroImageUrl" class="news__hero" :style="{ backgroundImage: `url(${heroImageUrl})` }" />
       <h2 class="news__title">News</h2>
       <div v-if="pending" class="news__state">Lade News…</div>
       <div v-else-if="error" class="news__state news__state--error">News konnten nicht geladen werden.</div>
@@ -36,9 +36,10 @@
 import { useNews } from '~/composables/useNews'
 import { usePocketBase } from '~/composables/usePocketBase'
 import { useSiteSettings } from '~/composables/useSiteSettings'
+import HeroImage from '~/components/HeroImage.vue'
 
 const pb = usePocketBase()
-const { heroImageUrl } = useSiteSettings()
+const { newsHeroImageUrl } = useSiteSettings()
 const { items, pending, error, page, totalPages, next, prev } = useNews()
 
 const heroUrl = (item: any) => {
@@ -65,15 +66,6 @@ const formatDate = (value?: string) => {
   &__inner {
     max-width: 980px;
     margin: 0 auto;
-  }
-
-  &__hero {
-    width: 100%;
-    margin-bottom: 1.5rem;
-    aspect-ratio: 16 / 5;
-    border-radius: 18px;
-    background-size: cover;
-    background-position: center;
   }
 
   &__title {

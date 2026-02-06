@@ -1,7 +1,7 @@
 <template>
   <section class="events">
+    <HeroImage :image-url="eventsHeroImageUrl" compact />
     <div class="events__inner">
-      <div v-if="heroImageUrl" class="events__hero" :style="{ backgroundImage: `url(${heroImageUrl})` }" />
       <h2 class="events__title">Anlässe</h2>
       <div v-if="pending" class="events__state">Lade Anlässe…</div>
       <div v-else-if="error" class="events__state events__state--error">Anlässe konnten nicht geladen werden.</div>
@@ -28,8 +28,11 @@
 <script setup lang="ts">
 import { useEvents } from '~/composables/useEvents'
 import { usePocketBase } from '~/composables/usePocketBase'
+import { useSiteSettings } from '~/composables/useSiteSettings'
+import HeroImage from '~/components/HeroImage.vue'
 
 const pb = usePocketBase()
+const { eventsHeroImageUrl } = useSiteSettings()
 const { items, pending, error } = useEvents()
 
 const imageUrl = (ev: any) => {
@@ -56,15 +59,6 @@ const formatDate = (value?: string) => {
   &__inner {
     max-width: 980px;
     margin: 0 auto;
-  }
-
-  &__hero {
-    width: 100%;
-    margin-bottom: 1.5rem;
-    aspect-ratio: 16 / 5;
-    border-radius: 18px;
-    background-size: cover;
-    background-position: center;
   }
 
   &__title {
