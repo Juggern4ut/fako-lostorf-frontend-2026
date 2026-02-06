@@ -107,11 +107,15 @@ const formatDate = (value?: string) => {
 
   &__meta {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.5rem;
     align-items: center;
-    margin-bottom: 0.4rem;
-    font-size: 0.85rem;
-    color: rgba(249, 250, 251, 0.7);
+    margin: 0.35rem 0 0.3rem;
+    font-size: 0.82rem;
+    color: rgba(55, 65, 81, 0.9);
+  }
+
+  &__date {
+    font-weight: 600;
   }
 
   &__badge {

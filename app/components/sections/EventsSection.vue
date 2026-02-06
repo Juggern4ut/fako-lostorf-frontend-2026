@@ -103,7 +103,7 @@ const formatDate = (value?: string) => {
     flex-direction: column;
     gap: 0.2rem;
     font-size: 0.9rem;
-    color: rgba(249, 250, 251, 0.8);
+    color: rgba(55, 65, 81, 0.9);
   }
 
   &__location {
