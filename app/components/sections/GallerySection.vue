@@ -1,6 +1,7 @@
 <template>
   <section class="gallery">
     <div class="gallery__inner">
+      <div v-if="heroImageUrl" class="gallery__hero" :style="{ backgroundImage: `url(${heroImageUrl})` }" />
       <h2 class="gallery__title">Galerie</h2>
       <div v-if="pending" class="gallery__state">Lade Galerien…</div>
       <div v-else-if="error" class="gallery__state gallery__state--error">Galerien konnten nicht geladen werden.</div>
@@ -58,6 +59,15 @@ const open = (url: string) => {
   &__inner {
     max-width: 980px;
     margin: 0 auto;
+  }
+
+  &__hero {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    aspect-ratio: 16 / 5;
+    border-radius: 18px;
+    background-size: cover;
+    background-position: center;
   }
 
   &__title {
