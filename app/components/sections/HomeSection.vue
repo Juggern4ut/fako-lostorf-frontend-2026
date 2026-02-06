@@ -1,9 +1,6 @@
 <template>
   <section class="home">
-    <div
-      class="home__hero"
-      :style="heroBackgroundStyle"
-    >
+    <div v-if="ready" class="home__hero" :style="heroBackgroundStyle">
       <div class="home__overlay" />
 
       <div class="home__content">
@@ -33,6 +30,13 @@
         </div>
       </div>
     </div>
+
+    <div v-else class="home__loader">
+      <div class="home__loader-inner">
+        <div class="home__spinner" />
+        <div class="home__loader-text">Lade Startseite…</div>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -42,6 +46,8 @@ import { useCountdown } from '~/composables/useCountdown'
 
 const { settings, heroImageUrl } = useSiteSettings()
 const { state: countdown } = useCountdown()
+
+const ready = ref(false)
 
 const fallbackTitle = 'Willkommen beim Fasnachtsverein Lostorf'
 
@@ -60,10 +66,35 @@ const heroBackgroundStyle = computed(() => {
 
   // Fallback, falls noch kein Bild hinterlegt ist
   return {
-    backgroundImage:
-      'radial-gradient(circle at top, #2a2b4a, #090b12 60%)',
+    backgroundImage: 'radial-gradient(circle at top, #2a2b4a, #090b12 60%)',
   }
 })
+
+const ensureReady = async () => {
+  if (!settings.value) return
+
+  if (heroImageUrl.value) {
+    await new Promise<void>((resolve) => {
+      const img = new Image()
+      img.onload = () => resolve()
+      img.onerror = () => resolve()
+      img.src = heroImageUrl.value as string
+    })
+  }
+
+  ready.value = true
+}
+
+watch(
+  () => ({ settings: settings.value, hero: heroImageUrl.value }),
+  async (val, oldVal) => {
+    if (!val.settings) return
+    if (!oldVal?.settings && val.settings) {
+      await ensureReady()
+    }
+  },
+  { immediate: true, deep: true },
+)
 </script>
 
 <style scoped lang="scss">
@@ -188,6 +219,36 @@ const heroBackgroundStyle = computed(() => {
   font-size: 0.85rem;
 }
 
+.home__loader {
+  min-height: calc(100vh - var(--header-height, 0px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background: radial-gradient(circle at top, #fff7ed, #ffedd5 55%);
+}
+
+.home__loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: #4b5563;
+}
+
+.home__spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 3px solid rgba(249, 115, 22, 0.25);
+  border-top-color: rgba(249, 115, 22, 0.9);
+  animation: home-spin 900ms linear infinite;
+}
+
+.home__loader-text {
+  font-size: 0.95rem;
+}
+
 @keyframes home-fade-in {
   0% {
     opacity: 0;
@@ -196,6 +257,15 @@ const heroBackgroundStyle = computed(() => {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes home-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
