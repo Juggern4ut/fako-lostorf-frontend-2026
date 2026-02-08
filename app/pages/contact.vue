@@ -10,6 +10,6 @@ import ContactSection from '~/components/sections/ContactSection.vue'
 
 <style scoped lang="scss">
 .page--contact {
-  padding-top: 2rem;
+  padding-top: 0;
 }
 </style>

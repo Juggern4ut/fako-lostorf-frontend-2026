@@ -10,6 +10,6 @@ import EventsSection from '~/components/sections/EventsSection.vue'
 
 <style scoped lang="scss">
 .page--events {
-  padding-top: 2rem;
+  padding-top: 0;
 }
 </style>
