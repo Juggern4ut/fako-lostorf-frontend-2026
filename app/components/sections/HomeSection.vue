@@ -44,7 +44,7 @@
 import { useSiteSettings } from '~/composables/useSiteSettings'
 import { useCountdown } from '~/composables/useCountdown'
 
-const { settings, heroImageUrl } = useSiteSettings()
+const { settings, homeHeroImageUrl } = useSiteSettings()
 const { state: countdown } = useCountdown()
 
 const ready = ref(false)
@@ -58,9 +58,9 @@ const introHtml = computed(() => {
 })
 
 const heroBackgroundStyle = computed(() => {
-  if (heroImageUrl.value) {
+  if (homeHeroImageUrl.value) {
     return {
-      backgroundImage: `url(${heroImageUrl.value})`,
+      backgroundImage: `url(${homeHeroImageUrl.value})`,
     }
   }
 
@@ -73,12 +73,12 @@ const heroBackgroundStyle = computed(() => {
 const ensureReady = async () => {
   if (!settings.value) return
 
-  if (heroImageUrl.value) {
+  if (homeHeroImageUrl.value) {
     await new Promise<void>((resolve) => {
       const img = new Image()
       img.onload = () => resolve()
       img.onerror = () => resolve()
-      img.src = heroImageUrl.value as string
+      img.src = homeHeroImageUrl.value as string
     })
   }
 
@@ -86,7 +86,7 @@ const ensureReady = async () => {
 }
 
 watch(
-  () => ({ settings: settings.value, hero: heroImageUrl.value }),
+  () => ({ settings: settings.value, hero: homeHeroImageUrl.value }),
   async (val, oldVal) => {
     if (!val.settings) return
     if (!oldVal?.settings && val.settings) {
