@@ -1,6 +1,12 @@
 <template>
   <section class="home">
     <div v-if="ready" class="home__hero" :style="heroBackgroundStyle">
+      <div
+        v-if="homeHeroImageUrl"
+        class="home__bg-image"
+        :class="{ 'home__bg-image--visible': imageVisible }"
+        :style="{ backgroundImage: `url(${homeHeroImageUrl})` }"
+      />
       <div class="home__overlay" />
 
       <div class="home__content">
@@ -48,6 +54,7 @@ const { settings, homeHeroImageUrl } = useSiteSettings()
 const { state: countdown } = useCountdown()
 
 const ready = ref(false)
+const imageVisible = ref(false)
 
 const fallbackTitle = 'Willkommen beim Fasnachtsverein Lostorf'
 
@@ -58,13 +65,7 @@ const introHtml = computed(() => {
 })
 
 const heroBackgroundStyle = computed(() => {
-  if (homeHeroImageUrl.value) {
-    return {
-      backgroundImage: `url(${homeHeroImageUrl.value})`,
-    }
-  }
-
-  // Fallback, falls noch kein Bild hinterlegt ist
+  // Basis-Gradient im Hintergrund, Bild wird in separatem Layer gerendert
   return {
     backgroundImage: 'radial-gradient(circle at top, #2a2b4a, #090b12 60%)',
   }
@@ -83,6 +84,13 @@ const ensureReady = async () => {
   }
 
   ready.value = true
+
+  // Bild erst nach dem Text einblenden
+  if (homeHeroImageUrl.value) {
+    setTimeout(() => {
+      imageVisible.value = true
+    }, 350)
+  }
 }
 
 watch(
@@ -112,6 +120,19 @@ watch(
   padding: 3rem 1.5rem;
   background-size: cover;
   background-position: center;
+}
+
+.home__bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 900ms ease-in-out;
+}
+
+.home__bg-image--visible {
+  opacity: 1;
 }
 
 .home__overlay {
