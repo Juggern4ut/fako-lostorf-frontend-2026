@@ -56,7 +56,7 @@ const formatDate = (value?: string) => {
 
 <style scoped lang="scss">
 .news {
-  padding: 2.5rem 1.25rem;
+  padding: 0 1.25rem 2.5rem;
   background: rgba(255, 255, 255, 0.65);
 
   @media (max-width: 640px) {
