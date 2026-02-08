@@ -41,7 +41,7 @@ const addressLines = computed(() => {
 
 <style scoped lang="scss">
 .contact {
-  padding: 2.5rem 1.25rem 3rem;
+  padding: 0 1.25rem 3rem;
   background: rgba(255, 255, 255, 0.65);
 
   @media (max-width: 640px) {
