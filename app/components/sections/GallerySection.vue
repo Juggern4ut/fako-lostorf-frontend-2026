@@ -9,15 +9,30 @@
 
       <div v-else class="gallery__list">
         <article v-for="g in items" :key="g.id" class="gallery__item" @click="open(g.externalUrl)">
-          <div v-if="g.coverImage" class="gallery__image" :style="{ backgroundImage: `url(${coverUrl(g)})` }" />
-          <div class="gallery__content">
-            <div class="gallery__meta">
-              <span v-if="g.date" class="gallery__date">{{ formatDate(g.date) }}</span>
+          <div
+            v-if="g.coverImage"
+            class="gallery__image"
+            :style="{ backgroundImage: `url(${coverUrl(g)})` }"
+          >
+            <div class="gallery__overlay">
+              <div class="gallery__meta">
+                <span v-if="g.date" class="gallery__date">{{ formatDate(g.date) }}</span>
+              </div>
+              <h3 class="gallery__item-title">{{ g.title }}</h3>
+              <button class="gallery__button" type="button">Galerie öffnen</button>
             </div>
-            <h3 class="gallery__item-title">{{ g.title }}</h3>
-            <button class="gallery__button" type="button">Galerie öffnen</button>
           </div>
         </article>
+
+        <div v-if="totalPages > 1" class="gallery__pagination">
+          <button class="gallery__page-btn" type="button" :disabled="page <= 1" @click.stop="prev">
+            Zurück
+          </button>
+          <span class="gallery__page-info">Seite {{ page }} / {{ totalPages }}</span>
+          <button class="gallery__page-btn" type="button" :disabled="page >= totalPages" @click.stop="next">
+            Weiter
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -31,7 +46,7 @@ import HeroImage from '~/components/HeroImage.vue'
 
 const pb = usePocketBase()
 const { galleryHeroImageUrl } = useSiteSettings()
-const { items, pending, error } = useGalleryLinks()
+const { items, pending, error, page, totalPages, next, prev } = useGalleryLinks()
 
 const formatDate = (value?: string) => {
   if (!value) return ''
@@ -80,62 +95,93 @@ const open = (url: string) => {
 
   &__list {
     display: grid;
-    gap: 1.25rem;
+    gap: 1.1rem;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   &__item {
-    display: grid;
-    grid-template-columns: minmax(0, 2.2fr) minmax(0, 3fr);
-    gap: 1.1rem;
-    padding: 1.1rem 1.25rem;
+    position: relative;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(148, 163, 184, 0.25);
+    overflow: hidden;
     cursor: pointer;
-
-    @media (max-width: 720px) {
-      grid-template-columns: 1fr;
-    }
+    min-height: 180px;
   }
 
   &__image {
     width: 100%;
+    height: 100%;
     aspect-ratio: 4 / 3;
-    border-radius: 12px;
     background-size: cover;
     background-position: center;
+    position: relative;
   }
 
-  &__content {
-    display: grid;
-    align-content: center;
-    gap: 0.4rem;
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0.9rem 1rem;
+    background: linear-gradient(180deg, transparent 40%, rgba(15, 23, 42, 0.9));
+    color: #f9fafb;
   }
 
   &__meta {
-    font-size: 0.9rem;
-    color: rgba(249, 250, 251, 0.8);
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-bottom: 0.25rem;
   }
 
   &__item-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.4rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
   }
 
   &__button {
-    margin-top: 0.3rem;
     align-self: flex-start;
     border-radius: 999px;
-    padding: 0.35rem 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.05);
-    color: inherit;
-    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid rgba(248, 250, 252, 0.75);
+    background: rgba(15, 23, 42, 0.6);
+    color: #f9fafb;
+    font-size: 0.8rem;
     cursor: pointer;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.8);
     }
+  }
+
+  &__pagination {
+    margin-top: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  &__page-btn {
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  &__page-info {
+    font-size: 0.85rem;
+    color: rgba(55, 65, 81, 0.9);
   }
 }
 </style>
