@@ -118,7 +118,7 @@ watch(
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.5)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4)),
     radial-gradient(circle at top, rgba(254, 249, 195, 0.45), transparent 60%);
 }
 
