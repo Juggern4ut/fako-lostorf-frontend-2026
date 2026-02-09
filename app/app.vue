@@ -1,7 +1,10 @@
 <template>
   <div class="app" :class="{ 'app--menu-open': menuOpen }">
     <header class="app__header">
-      <div class="app__brand">Fasnachtsverein Lostorf</div>
+      <div class="app__brand">
+        <img src="/logo-fako.png" alt="Lostorfer Fasnacht" class="app__logo" />
+        <span class="app__brand-text">Fasnachtsverein Lostorf</span>
+      </div>
 
       <button
         class="app__burger"
@@ -76,6 +79,19 @@ const menuOpen = ref(false)
   }
 
   &__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  &__logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  &__brand-text {
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
