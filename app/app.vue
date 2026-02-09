@@ -57,7 +57,7 @@ const menuOpen = ref(false)
 }
 
 .app {
-  --header-height: 56px;
+  --header-height: 72px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@ const menuOpen = ref(false)
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.8rem 1.25rem;
+    padding: 0.9rem 1.25rem;
     border-bottom: 1px solid rgba(148, 163, 184, 0.25);
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(18px);
@@ -85,9 +85,9 @@ const menuOpen = ref(false)
   }
 
   &__logo {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
     object-fit: cover;
   }
 
@@ -154,8 +154,8 @@ const menuOpen = ref(false)
       flex-direction: column;
       justify-content: center;
       gap: 0.26rem;
-      width: 2.6rem;
-      height: 2.6rem;
+      width: 2.8rem;
+      height: 2.8rem;
       margin-left: 0.8rem;
       border-radius: 999px;
       border: none;
