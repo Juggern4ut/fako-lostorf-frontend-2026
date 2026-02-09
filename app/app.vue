@@ -2,7 +2,7 @@
   <div class="app" :class="{ 'app--menu-open': menuOpen }">
     <header class="app__header">
       <div class="app__brand">
-        <img src="/logo-fako.png" alt="Lostorfer Fasnacht" class="app__logo" />
+        <img src="https://fako-lostorf.ch/templates/web/img/logo.png" alt="Lostorfer Fasnacht" class="app__logo" />
         <span class="app__brand-text">Fasnachtsverein Lostorf</span>
       </div>
 
